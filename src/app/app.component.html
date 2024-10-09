@@ -1,1 +1,34 @@
-app works
+<div style="text-align:center">
+  <h1>
+    Angular Image Annotater Example App
+  </h1>
+  <select (change)="changeImage($event.target.value)">
+    <option [selected]="true" value="flower">Flower</option>
+    <option value="hand">Hand</option>
+  </select>
+  <aia-image-annotator #annotator [image]="base64Image" [fontSize]="fontSize" [fontFamily]="fontFamily" [color]="strokeColor" [displayWidth]="displayWidth"></aia-image-annotator>
+  <select [(ngModel)]="strokeColor">
+    <option value="#000">Black</option>
+    <option value="#1218CE">Blue</option>
+    <option value="#F00">Red</option>
+  </select>
+  <button (click)="pencilTool()">Pencil Tool</button>
+  <button (click)="textTool()">Text Tool</button>
+  <select [(ngModel)]="fontSize">
+    <option value="10px">10px</option>
+    <option value="15px">15px</option>
+    <option value="20px">20px</option>
+    <option value="36px">36px</option>
+  </select>
+  <select [(ngModel)]="fontFamily">
+    <option value="Georgia">Georgia</option>
+    <option value="Arial">Arial</option>
+    <option value="Times">Times</option>
+  </select>
+  <button (click)="undo()">Undo</button>
+  <button (click)="redo()">Redo</button>
+  <button (click)="clear()">Clear</button>
+  <br>
+  <br>
+  <button (click)="getAnnotatedImage()">Download Annotated Image</button>
+</div>
