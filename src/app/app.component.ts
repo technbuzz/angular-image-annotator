@@ -3,10 +3,11 @@ import { RouterModule } from '@angular/router';
 import { HAND_IMAGE } from './images/hand';
 import { FLOWER_IMAGE } from './images/flower';
 import { AiaImageAnnotatorComponent, AngularImageAnnotatorModule } from '@nx-angular-image-annotator/aia';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
-  imports: [RouterModule, AngularImageAnnotatorModule],
+  imports: [RouterModule, FormsModule, AngularImageAnnotatorModule],
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -26,7 +27,8 @@ export class AppComponent {
 
   }
 
-  public changeImage(image: any) {
+  public changeImage(event: any) {
+    const image = event.target.value
     if (image === 'flower') {
       this.base64Image = FLOWER_IMAGE;
     } else {
