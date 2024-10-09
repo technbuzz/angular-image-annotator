@@ -13,32 +13,32 @@ export class AiaImageAnnotatorComponent implements OnInit, OnChanges {
   /**
    * The image to annotate. Can be data URI or a URL.
    */
-  @Input() image: string;
+  @Input() image!: string;
 
   /**
    * The font family.
    * Default: Georgia
    */
-  @Input() fontFamily: string;
+  @Input() fontFamily!: string;
 
   /**
    * The font size (including units).
    * Default: 15px
    */
-  @Input() fontSize: string;
+  @Input() fontSize!: string;
 
   /**
    * Hex color string.
    * Default: #1218CE (deep blue)
    */
-  @Input() color: string;
+  @Input() color!: string;
 
   @Input() displayWidth = null;
 
-  @ViewChild('imageCanvas') private imageCanvasRef: ElementRef;
-  @ViewChild('drawingCanvas') private drawingCanvasRef: ElementRef;
-  @ViewChild('mergeCanvas') private mergeCanvasRef: ElementRef;
-  @ViewChild(FloatingTextEntryComponent) textEntry: FloatingTextEntryComponent;
+  @ViewChild('imageCanvas') private imageCanvasRef!: ElementRef;
+  @ViewChild('drawingCanvas') private drawingCanvasRef!: ElementRef;
+  @ViewChild('mergeCanvas') private mergeCanvasRef!: ElementRef;
+  @ViewChild(FloatingTextEntryComponent) textEntry!: FloatingTextEntryComponent;
 
   public imageWidth = 0;
   public imageHeight = 0;
@@ -52,8 +52,8 @@ export class AiaImageAnnotatorComponent implements OnInit, OnChanges {
   private _drawCommands: DrawCommand[] = [];
   private _redoCommands: DrawCommand[] = [];
 
-  public imageCtx: CanvasRenderingContext2D;
-  public drawingCtx: CanvasRenderingContext2D;
+  public imageCtx!: CanvasRenderingContext2D;
+  public drawingCtx!: CanvasRenderingContext2D;
 
   public get canvasRect(): ClientRect {
     return this.drawingCanvasRef.nativeElement.getBoundingClientRect();
@@ -68,7 +68,7 @@ export class AiaImageAnnotatorComponent implements OnInit, OnChanges {
     this.loadImageAndInitializeCanvas(this.image);
   }
 
-  ngOnChanges(changes) {
+  ngOnChanges(changes: any) {
     if (changes.image) {
       // Full reset
       this._drawCommands = [];
@@ -113,7 +113,7 @@ export class AiaImageAnnotatorComponent implements OnInit, OnChanges {
     if (!this._drawCommands.length) {
       return;
     }
-    this._redoCommands.push(this._drawCommands.pop());
+    this._redoCommands.push(this._drawCommands.pop()!);
     this.clearCanvas();
     this.drawCommandsOnCanvas(this._drawCommands, this.drawingCtx);
   }
@@ -125,7 +125,7 @@ export class AiaImageAnnotatorComponent implements OnInit, OnChanges {
     if (!this._redoCommands.length) {
       return;
     }
-    this._drawCommands.push(this._redoCommands.pop());
+    this._drawCommands.push(this._redoCommands.pop()!);
     this.clearCanvas();
     this.drawCommandsOnCanvas(this._drawCommands, this.drawingCtx);
   }
@@ -175,6 +175,7 @@ export class AiaImageAnnotatorComponent implements OnInit, OnChanges {
       this.imageWidth = tempImage.width;
       this.imageHeight = tempImage.height;
       this.initializeDisplayDimensions();
+      //@ts-ignore
       setTimeout(_ => { // Pushing canvas init to next cycle
         this.initializeCanvas(tempImage);
       }, 0);
@@ -192,6 +193,7 @@ export class AiaImageAnnotatorComponent implements OnInit, OnChanges {
       this.projectionFactor = this.imageHeight / this.displayHeight;
     } else {
       this.displayHeight = this.imageHeight;
+      //@ts-ignore
       this.displayWidth = this.imageWidth;
       this.projectionFactor = 1;
     }
@@ -232,6 +234,7 @@ export class AiaImageAnnotatorComponent implements OnInit, OnChanges {
     this.drawingCtx.font = fontString;
 
     const fontParts = fontSize.match(/(.*)(px|pt)/);
+      //@ts-ignore
     const adjustedFontSize = Math.floor(parseInt(fontParts[1], 10) / this.projectionFactor) + fontParts[2];
     this.textEntry.setFont(`${adjustedFontSize || DEFAULTS.fontSize} ${fontFamily || DEFAULTS.fontFamily}`);
   }

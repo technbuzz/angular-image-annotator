@@ -10,9 +10,9 @@ export class FloatingTextEntryComponent implements OnInit {
     public currentText = '';
     private borderWidth = 2;
 
-    @ViewChild('textBox') textBoxRef: ElementRef;
-    @ViewChild('p') pRef: ElementRef;
-    @ViewChild('input') inputRef: ElementRef;
+    @ViewChild('textBox') textBoxRef!: ElementRef;
+    @ViewChild('p') pRef!: ElementRef;
+    @ViewChild('input') inputRef!: ElementRef;
 
     ngOnInit() {
         this.textBoxRef.nativeElement.style.borderWidth = this.borderWidth + 'px';
@@ -49,6 +49,7 @@ export class FloatingTextEntryComponent implements OnInit {
     }
 
     public focus() {
+      //@ts-ignore
         setTimeout(_ => {
             this.inputRef.nativeElement.focus();
         }, 0);
@@ -72,8 +73,10 @@ export class FloatingTextEntryComponent implements OnInit {
         let temp = document.createElement(el.nodeName);
         temp.setAttribute('style', `margin:0px;padding:0px;font-family:${el.style.fontFamily};font-size:${el.style.fontSize}`);
         temp.innerHTML = 'test';
+      //@ts-ignore
         temp = el.parentNode.appendChild(temp);
         const ret = temp.clientHeight;
+      //@ts-ignore
         temp.parentNode.removeChild(temp);
         return ret;
     }

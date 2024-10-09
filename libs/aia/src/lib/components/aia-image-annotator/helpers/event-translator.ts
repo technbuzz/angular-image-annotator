@@ -11,6 +11,7 @@ export class EventTranslator {
         } else {
             singleEvent = event;
         }
+      //@ts-ignore
         const point = this.getCanvasPointFromEvent(singleEvent, canvasRect.left, canvasRect.top, projectionFactor);
         return new ContactEvent(this.getTypeFromEvent(event), point);
     }
@@ -47,6 +48,7 @@ export class EventTranslator {
             default:
                 console.error(`aia-image-annotator: unrecognized contact event: ${ev.type}`);
         }
+      //@ts-ignore
         return type;
     }
 }

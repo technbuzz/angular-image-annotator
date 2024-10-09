@@ -22,6 +22,7 @@ export abstract class DrawState {
 
 export class PencilState extends DrawState {
     currentCommand: PencilCommand = new PencilCommand();
+      //@ts-ignore
     lastCoord: Point;
 
     /**
@@ -63,8 +64,8 @@ export class PencilState extends DrawState {
 }
 
 export class TextState extends DrawState {
-    private currentCommand: TextCommand;
-    private currentPosition: Point;
+    private currentCommand!: TextCommand;
+    private currentPosition!: Point;
 
     public getName(): StateName {
         return 'text';
@@ -98,6 +99,7 @@ export class TextState extends DrawState {
         this.currentCommand.draw(imageAnnotator.drawingCtx);
         imageAnnotator.addCommand(this.currentCommand);
         imageAnnotator.textEntry.clear();
+      //@ts-ignore
         this.currentCommand = null;
     }
 
@@ -148,7 +150,7 @@ export interface DrawCommand {
 
 export class PencilCommand implements DrawCommand {
     private pathArray: Point[] = [];
-    private color: string;
+    private color!: string;
 
     constructor() { }
 
@@ -178,8 +180,8 @@ export class PencilCommand implements DrawCommand {
 
 export class TextCommand implements DrawCommand {
     private positionTextPairs: PositionTextPair[] = [];
-    private color: string;
-    private font: string;
+    private color!: string;
+    private font!: string;
 
     public addPositionTextPairs(pairs: PositionTextPair[]) {
         this.positionTextPairs = this.positionTextPairs.concat(pairs);
